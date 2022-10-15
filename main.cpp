@@ -2,6 +2,7 @@
 #include <fstream>
 #include <string>
 #include <cstdlib>
+#include <limits>
 
 using namespace std;
 
@@ -62,6 +63,7 @@ bool check_data()
         }
         else{
             cout << "Login or password do not exists!" << endl;
+            cout << "\n";
             file.close();
             return false;
         }
@@ -108,12 +110,23 @@ int main()
     int tmp_input;
     bool is_logged = false;
 
-    while(!is_logged){
-        cout << "What you want to do?" << endl;
-        cout << "1. Register" << endl;
-        cout << "2. Login" << endl;
+    bool wrong_input = false;
 
-        cin >> tmp_input;
+    while(!is_logged){
+        do{
+            cout << "What you want to do?" << endl;
+            cout << "1. Register" << endl;
+            cout << "2. Login" << endl;
+
+            cin >> tmp_input;
+            wrong_input = cin.fail();
+
+            if(wrong_input){
+                cin.clear();
+                cin.ignore(numeric_limits<int>::max(), '\n');
+            }
+            system("cls");
+        }while(wrong_input);
 
         switch(tmp_input){
         case 1:
